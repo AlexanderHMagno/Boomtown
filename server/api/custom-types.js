@@ -33,6 +33,7 @@ const DateScalar = new GraphQLScalarType({
     },
   });
 
+  console.log('custom '+DateScalar);
 // -------------------------------
 
 module.exports = {

@@ -25,6 +25,7 @@ const { DateScalar } = require('../custom-types');
 module.exports = app => {
   return {
     Date: DateScalar,
+    
 
     Query: {
       viewer() {
@@ -80,6 +81,9 @@ module.exports = app => {
         if(parent.borrowerid==null) return null;
         return tryAndCatch(await pgResource.getUserById(parent.borrowerid));
         // -------------------------------
+      },
+      created(){
+        return null
       }
       
     },
@@ -124,6 +128,5 @@ async function tryAndCatch(dataInfo,debug){
       return dataInfo;
   } catch (e) {
     throw new ApolloError(e);
-    
   }
 }

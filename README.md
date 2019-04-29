@@ -95,7 +95,7 @@ npm run test
 
 ### File describing the project
 
-##Technologies used
+## Technologies used
 
 * Postgres
 * Postico
