@@ -118,9 +118,7 @@ module.exports = app => {
 
 
 async function tryAndCatch(dataInfo,debug){
-  
  if(debug) console.log(debug);
- 
   try {
     if(Object.keys(dataInfo).length==0) return null;
       return dataInfo;

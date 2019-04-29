@@ -1,6 +1,4 @@
 
-console.log('4 pg-resources');
-
 
 function tagsQueryString(tags, itemid, result) {
   /**
