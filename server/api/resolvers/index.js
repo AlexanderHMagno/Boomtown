@@ -48,8 +48,8 @@ module.exports = app => {
       async user(parent, { id }, { pgResource }, info) {
        return tryAndCatch(await pgResource.getUserById(id));
       },
-      async items(parent, { id }, { pgResource }, info) {
-        return tryAndCatch(await pgResource.getItems());
+      async items(parent, { filter }, { pgResource }, info) {
+        return tryAndCatch(await pgResource.getItems(filter));
       },
       async tags(parent, { id }, { pgResource }, info) {
         return tryAndCatch(await pgResource.getTags());

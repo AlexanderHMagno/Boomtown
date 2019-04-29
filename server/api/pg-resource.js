@@ -71,24 +71,14 @@ module.exports = postgres => {
 
     },
     async getItems(idToOmit) {
-      console.log("getting items...");
-      const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *
-         *  Get all Items. 
-         * 
-         *  If the idToOmit parameter has a value,
-         *  the query should only return Items were the ownerid column
-         *  does not contain the 'idToOmit'
-         *
-         *  Hint: You'll need to use a conditional AND and WHERE clause
-         *  to your query text using string interpolation
-         */
-
+     
+     const items = (idToOmit == undefined)? 
+      await postgres.query({
         text: `SELECT * FROM items`,
-        values: idToOmit ? [idToOmit] : []
-      });
+      }):await postgres.query({
+      text: `SELECT * FROM items WHERE ownerid != ${idToOmit}`
+      
+    });
       
       return items.rows;
     },
@@ -97,6 +87,7 @@ module.exports = postgres => {
         /**
          *  @TODO: Advanced queries
          *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
+         * Why Join? if we have this id in our table? 
          */
         text: `SELECT * FROM items WHERE ownerid=$1`,
         values: [id]
