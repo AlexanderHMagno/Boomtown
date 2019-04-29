@@ -4,6 +4,9 @@ const express = require('express');
 const fallback = require('express-history-api-fallback');
 const path = require('path');
 
+
+
+
 module.exports = (app) => {
   const PORT = process.env.PORT || 8080;
 
@@ -44,7 +47,14 @@ module.exports = (app) => {
    *
    *  For example: app.set('PG_HOST', process.env.PG_HOST || 'localhost')
    */
-
+  app.set('PORT',PORT);
+  app.set('JWT_SECRET',process.env.JWT_SECRET || 'keyboardcat');
+  app.set('JWT_COOKIE_NAME','bt-token');
+  app.set('PG_HOST',process.env.HOST || 'localhost');
+  app.set('PG_USER',process.env.USER || 'boomtown');
+  app.set('PG_PASSWORD',process.env.PASSWORD || 'boomtown');
+  app.set('PG_DB',process.env.PG_DB || 'boomtown');
+  
   app.use(cookieParser());
 
   if (process.env.NODE_ENV === 'production') {
