@@ -55,12 +55,19 @@ module.exports = gql`
   input AssignedBorrower {
     id: ID!
   }
+  input AssignedOwner {
+    id: ID!
+  }
 
   input NewItemInput {
     title: String!
     description: String
+    owner: [AssignedOwner]!
+    borrower: [AssignedBorrower]
     tags:[AssignedTag]!
+   
   }
+
 
   type Query {
     user(id: ID!): User
@@ -73,3 +80,10 @@ module.exports = gql`
     addItem(item: NewItemInput!): Item
   }
 `;
+// addItem(title: String!,description: String): Item
+
+// input NewItemInput {
+//   title: String!
+//   description: String
+//   tags:[AssignedTag]!
+// }

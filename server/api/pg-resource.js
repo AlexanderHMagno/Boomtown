@@ -84,11 +84,6 @@ module.exports = postgres => {
     },
     async getItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         * Why Join? if we have this id in our table? 
-         */
         text: `SELECT * FROM items WHERE ownerid=$1`,
         values: [id]
       });
@@ -96,10 +91,6 @@ module.exports = postgres => {
     },
     async getBorrowedItemsForUser(id) {
       const items = await postgres.query({
-        /**
-         *  @TODO: Advanced queries
-         *  Get all Items. Hint: You'll need to use a LEFT INNER JOIN among others
-         */
         text: `SELECT * FROM items WHERE borrowerid=$1`,
         values: [id]
       });
@@ -124,6 +115,24 @@ module.exports = postgres => {
       return tags.rows;
     },
     async saveNewItem({ item, user }) {
+      console.log('item ', item);
+      console.log('user ', user);
+     
+      
+      let borrower = item.borrower == null ? null : item.borrower[0].id;
+
+      const tagsQuery = {
+        text: `INSERT INTO items (title,description,ownerid,borrowerid) 
+               VALUES ($1,$2,$3,$4)`, // @TODO: Advanced queries
+        values: [item.title,item.description,item.owner[0].id,borrower]
+      };
+
+      const tags = await postgres.query(tagsQuery);
+      console.log('tags.row',tags);
+
+      
+
+      return null;
       /**
        *  @TODO: Adding a New Item
        *

@@ -74,10 +74,6 @@ module.exports = app => {
         return tryAndCatch(await pgResource.getTagsForItem(parent.id));
       },
       async borrower(parent, { id }, { pgResource }, info) {
-        /**
-         * @TODO: Replace this mock return statement with the correct user from Postgres
-         * or null in the case where the item has not been borrowed.
-         */ 
         if(parent.borrowerid==null) return null;
         return tryAndCatch(await pgResource.getUserById(parent.borrowerid));
         // -------------------------------
@@ -106,13 +102,16 @@ module.exports = app => {
          *  Again, you may look at the user resolver for an example of what
          *  destructuring should look like.
          */
+        
+        
+        // return null
 
-        image = await image;
-        const user = await jwt.decode(context.token, app.get('JWT_SECRET'));
+        //image = await image;
+        //const user = await jwt.decode(context.token, app.get('JWT_SECRET'));
         const newItem = await context.pgResource.saveNewItem({
-          item: args.item,
-          image: args.image,
-          user
+        item: args.item,
+        //image: args.image,
+        user : 1
         });
         return newItem;
       }
