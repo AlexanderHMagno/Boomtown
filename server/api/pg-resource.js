@@ -21,6 +21,8 @@ function tagsQueryString(tags, itemid, result) {
 module.exports = postgres => {
   return {
     async createUser({ fullname, email, password }) {
+
+      //note we need to encrypt password Sha256 or MD5. 
       const newUserInsert = {
         text: 'INSERT INTO users (fullname ,email ,password) VALUES ($1, $2, $3)', // @TODO: Authentication - Server
         values: [fullname, email, password]
@@ -41,7 +43,9 @@ module.exports = postgres => {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: '', // @TODO: Authentication - Server
+        text: `SELECT user,password 
+               FROM users 
+               WHERE email= $1 `, 
         values: [email]
       };
       try {
@@ -57,7 +61,7 @@ module.exports = postgres => {
       const findUserQuery = {
         text: `SELECT id,email,fullname,bio 
                FROM users 
-               WHERE id=$1`, // @TODO: Basic queries
+               WHERE id=$1`, 
 
         values: [id]
       };
@@ -107,7 +111,7 @@ module.exports = postgres => {
         text: `SELECT tags.title, tags.id
                FROM itemtags 
                JOIN tags on tags.id=itemtags.tagid 
-               WHERE itemtags.itemid= $1`, // @TODO: Advanced queries
+               WHERE itemtags.itemid= $1`, 
         values: [id]
       };
 
@@ -115,6 +119,8 @@ module.exports = postgres => {
       return tags.rows;
     },
     async saveNewItem({ item, user }) {
+
+      //still working on this, still basic.
       console.log('item ', item);
       console.log('user ', user);
      
