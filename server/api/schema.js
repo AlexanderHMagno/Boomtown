@@ -68,7 +68,6 @@ module.exports = gql`
    
   }
 
-
   type Query {
     user(id: ID!): User
     viewer: User
@@ -80,10 +79,3 @@ module.exports = gql`
     addItem(item: NewItemInput!): Item
   }
 `;
-// addItem(title: String!,description: String): Item
-
-// input NewItemInput {
-//   title: String!
-//   description: String
-//   tags:[AssignedTag]!
-// }

@@ -49,7 +49,7 @@ module.exports = app => {
        return tryAndCatch(await pgResource.getUserById(id));
       },
       async items(parent, { filter }, { pgResource }, info) {
-        return tryAndCatch(await pgResource.getItems(filter));
+        return tryAndCatch(await pgResource.getSpecificItem(filter));//orignial getItems I changed to test this new Query.
       },
       async tags(parent, { id }, { pgResource }, info) {
         return tryAndCatch(await pgResource.getTags());

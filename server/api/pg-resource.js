@@ -86,6 +86,18 @@ module.exports = postgres => {
       
       return items.rows;
     },
+    async getSpecificItem(id) {
+     
+      const items = (id == undefined)? 
+       await postgres.query({
+         text: `SELECT * FROM items`,
+       }):await postgres.query({
+       text: `SELECT * FROM items WHERE id = ${id}`
+       
+     });
+       
+       return items.rows;
+     },
     async getItemsForUser(id) {
       const items = await postgres.query({
         text: `SELECT * FROM items WHERE ownerid=$1`,
