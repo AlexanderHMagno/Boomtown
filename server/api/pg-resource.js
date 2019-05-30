@@ -24,13 +24,15 @@ module.exports = postgres => {
 
       //note we need to encrypt password Sha256 or MD5. 
       const newUserInsert = {
-        text: 'INSERT INTO users (fullname ,email ,password) VALUES ($1, $2, $3)', // @TODO: Authentication - Server
+        text: 'INSERT INTO users (fullname ,email ,password) VALUES ($1, $2, $3) RETURNING *', // @TODO: Authentication - Server
         values: [fullname, email, password]
       };
       try {
         const user = await postgres.query(newUserInsert);
+        console.log(user.rows);
         return user.rows[0];
       } catch (e) {
+        console.log(e.message);
         switch (true) {
           case /users_fullname_key/.test(e.message):
             throw 'An account with this username already exists.';
@@ -43,7 +45,7 @@ module.exports = postgres => {
     },
     async getUserAndPasswordForVerification(email) {
       const findUserQuery = {
-        text: `SELECT user,password 
+        text: `SELECT id,password 
                FROM users 
                WHERE email= $1 `, 
         values: [email]

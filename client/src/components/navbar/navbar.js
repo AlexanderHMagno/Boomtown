@@ -33,7 +33,7 @@ const path_share = window.location.pathname === '/share';
 
 function ButtonAppBar(props) {
   const { classes } = props;
- console.log(window.location.pathname)
+
   return (
     <div className={classes.root}>
       <AppBar position="static">

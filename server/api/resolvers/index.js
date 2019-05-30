@@ -18,7 +18,7 @@ const { ApolloError } = require('apollo-server-express');
 
 // @TODO: Uncomment these lines later when we add auth
 // const jwt = require("jsonwebtoken")
-// const authMutations = require("./auth")
+const authMutations = require("./auth")
 // -------------------------------
 const { DateScalar } = require('../custom-types');
 
@@ -85,9 +85,7 @@ module.exports = app => {
     },
 
     Mutation: {
-      // @TODO: Uncomment this later when we add auth
-      // ...authMutations(app),
-      // -------------------------------
+      ...authMutations(app),
 
       async addItem(parent, args, context, info) {
         /**
@@ -121,6 +119,7 @@ module.exports = app => {
 
 
 async function tryAndCatch(dataInfo,debug){
+  console.log("WE ARE IN THE TRY AND CATCH");
  if(debug) console.log(debug);
   try {
     if(Object.keys(dataInfo).length==0) return null;

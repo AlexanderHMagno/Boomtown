@@ -7,15 +7,15 @@ import styles from './styles';
 import { Query } from 'react-apollo';
 import { ITEM_QUERY } from '../../apollo/queries';
 import Items from '../Items/Items';
-
-
+import { test2 } from '../Items/Card';
+    
 
 class ProfileContainer extends Component {
     render() {
       return (
         // <Profile />
 
-        <Query query = {ITEM_QUERY}>
+        <Query query = { ITEM_QUERY(4) }>
           {({ loading, error, data}) => {
             
             

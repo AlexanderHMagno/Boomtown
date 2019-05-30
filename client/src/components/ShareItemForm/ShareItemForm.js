@@ -1,25 +1,25 @@
+//this is a test the real data is in shareItemForm1. 
+
 import React, { Component } from 'react';
-import { Form, Field } from 'react-final-form';
+import { connect } from 'react-redux';
+import { updateNewItem } from '../../redux/reducers';
+import { Form, FormSpy, Field } from 'react-final-form';
 import TextField from '@material-ui/core/TextField';
-import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
-import Tags from './tags';
-import { CardActions } from '@material-ui/core';
-import Card from '../ShareItemPreview/ShareItemPreview';
-import { empty } from 'apollo-link';
+import { withStyles } from '@material-ui/core/styles';
 import styles from './styles';
+import Tags from './tags';
+import Store from '../../redux/index';
+import Share_Preview from '../ShareItemPreview';
 
-
+console.log(Store.getState().rootReducer.name)
 
 const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2))
 }
-
-const required = value => (value ? undefined : 'Required')
-
-class ShareForm extends Component {
-  constructor(props) {
-    super(props);
+class shareItemForm extends Component {
+  constructor (props) {
+    super (props);
     this.state = {
       name: '',
       description:'',
@@ -28,57 +28,66 @@ class ShareForm extends Component {
       image_button: false,
     };
   }
-
-
-  handleChange = name => event => {
-    this.setState({
-      [name]: event.target.value,
+s
+dispatchUpdate(values, updateNewItem) {
+  if (!values.imageurl && this.state.fileSelected) {
+    this.getBase64Url().then(imageurl => {
+      updateNewItem({
+        imageurl
+      });
     });
-  };
-
-  update_tags (new_tags) {
-    const string_tags = new_tags.join(', ') + '.';
-    string_tags == '.'? 
-      this.setState({tags: ''}) :
-      this.setState({tags:string_tags})
   }
+  this.props.updateNewItem({
+    ...values,
+    tags: this.state.tags,
+  });
+  
+}
 
-  update_image (img) {
-    this.setState({image_button: !img})
-  }
+handleChange = name => event => {
+  this.setState({
+    [name]: event.target.value,
+  });
+};
 
-  evaluate_button () {
+update_tags (new_tags) {
+  const string_tags = new_tags.join(', ') + '.';
+  string_tags == '.' ? 
+    this.setState({tags: ''}) :
+    this.setState({tags:string_tags})
+}
+evaluate_button () {
     
   return (this.state.name == '' || 
           this.state.description == '' || 
           this.state.tags ==''); 
           
-  }
-  
+  }  
 
-  render() {
-    const { classes } = this.props;
-    
-    return (
-      <div className={classes.container}>
+render () {
+  const { classes } = this.props;
+  return (
+    <div className={classes.container}>
         <div className={classes.leftContainer}>
-          < Card title={this.state.name}
+          < Share_Preview title={this.state.name}
                  description={this.state.description}
                  tags={this.state.tags}/>
         </div>
         <div className={classes.rightContainer}>
-          <Form 
+      <Form 
             onSubmit={onSubmit}
-            render={({ handleSubmit, form, submitting, pristine, values }) => (
+            render={({ handleSubmit, submitting, pristine, values }) => (
+
               <form onSubmit={handleSubmit}>
-                {/* <Field name="NameYourItem" validate={required}>
-                  {({ input, meta }) => (
-                    <div>
-                      <input {...input} type="text" placeholder="Name Your Item" />
-                      {meta.error && meta.touched && <span>{meta.error}</span>}
-                    </div>
-                  )}
-                </Field> */}
+              <FormSpy
+                subscription={{ values: true }}
+                component={(args) => {
+                if (values) {
+                  this.dispatchUpdate(values, updateNewItem);
+                }
+                return ''
+                }}
+              />
                 <h1 className={classes.title}>Share. Borrow.<br></br> Prosper.</h1>
                 {!this.state.image_button? 
                   <Button variant="contained" size='large' color="primary" 
@@ -94,31 +103,51 @@ class ShareForm extends Component {
                   </Button>
                 }
                 <br></br>
-                <TextField
-                  id="name"
-                  label="Name Your Item"
-                  className={classes.textField}
-                  value={this.state.name}
-                  onChange={this.handleChange('name')}
-                  margin="normal"
-                />
+                <Field name='name'>
+                  {({input,meta}) =>(
+                    <TextField
+                      id="name"
+                      ref="name"
+                      label="Name Your Item"
+                      className={classes.textField}
+                      value={input.value}
+                      margin="normal"
+                      inputProps={{
+                        ...input
+                      }}
+                    />
+                  )}
+                </Field>
                 <br></br>
-                <TextField
-                  id="multiline-static"
-                  // label="Describe Your Item"
-                  placeholder = "Describe Your Item"
-                  multiline
-                  rows="4"
-                  defaultValue=""
-                  className={classes.textField}
-                  onChange={this.handleChange('description')}
-                  margin="normal"
-
-                />
+                <Field name='description'>
+                  {({input,meta}) => (
+                    <TextField
+                      id="multiline-static"
+                      // label="Describe Your Item"
+                      placeholder = "Describe Your Item"
+                      multiline
+                      rows="4"
+                      defaultValue={input.value}
+                      className={classes.textField}
+                      margin="normal"
+                      inputProps={{
+                        ...input
+                      }}
+                      />
+                    )}
+                </Field>
                 
-                <Tags width_large={classes.field_large}
-                      update_tags={this.update_tags.bind(this)}/>
+                <Field name='tags'>
+                {({input, meta})=>(
+                  <Tags width_large={classes.field_large}
+                  update_tags={this.update_tags.bind(this)}
+                  />
+                )}
+                
+                </Field>
+                
                 <br></br>
+
                 {!this.evaluate_button()&& <Button variant="contained" color="primary"  
                 className={classes.button_small}
                 >
@@ -135,13 +164,33 @@ class ShareForm extends Component {
             )}
           />
         </div>
-        
       </div>
-    );
-  }
-}
+  )
+}}
+//this will send the state the data to redux
+// const mapStateToProps = (reduxState) => {
+//   return reduxState
+// };
+const mapStateToProps = null;
 
-export default withStyles(styles)(ShareForm);
+const mapDispatchToProps = dispatch => ({
+  /*  This function will provide a prop called 
+  'updateNewItem' to our component. */
+    
+    updateNewItem(item) {
+    // Inside this function we can dispatch data to our reducer.
+    dispatch(updateNewItem(item));
+    
+  },
+  
+  // ... other methods
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(withStyles(styles)(shareItemForm))
+  
 
 
 

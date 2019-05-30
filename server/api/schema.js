@@ -14,7 +14,13 @@ module.exports = gql`
 
   scalar Date
 
-  type Item {
+  enum Role {
+    VIEWER
+  }
+
+  directive @auth on OBJECT | FIELD_DEFINITION
+
+  type Item @auth {
     id: ID!
     title: String!
     imageurl: String
@@ -25,13 +31,14 @@ module.exports = gql`
     borrower: User
   }
 
-  type User {
+  type User @auth{
     id: ID!
     email: String!
     fullname: String!
     bio: String
     items: [Item]
     borrowed: [Item]
+    password: String!
   }
 
   type Tag {
@@ -75,7 +82,22 @@ module.exports = gql`
     tags: [Tag]
   }
 
+  input SignIn {
+    email: String!
+    fullname: String!
+    password: String!
+  }
+
+  input UserLoginInput {
+    email: String
+    password: String
+  }
+
   type Mutation {
+    signup(user:SignIn!) : User
     addItem(item: NewItemInput!): Item
+    login(user:UserLoginInput): User
+    logout: Boolean!
+    
   }
 `;

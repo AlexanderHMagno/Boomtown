@@ -33,6 +33,17 @@ const styles = {
   }
 };
 
+
+
+const test1 = (id) =>{
+ window.location.pathname = 'profile';
+  console.log(id)
+  window.item_id  = id;
+}
+export const test2 = 0
+
+
+
 function SimpleMediaCard(props) {
   const { classes, title ,description , imageUrl , item_owner , item_id} = props;
   
@@ -66,7 +77,7 @@ function SimpleMediaCard(props) {
           </Typography>
         </CardContent>
         <CardActions>
-          <Button variant="outlined" className={classes.button} onClick={()=>window.location.pathname = 'profile'} id={item_id}>
+          <Button variant="outlined" className={classes.button} onClick={()=>test1(item_id)} id={item_id}>
           BORROW
           </Button>
         </CardActions>
@@ -93,5 +104,6 @@ function ImageAvatars(props) {
 ImageAvatars.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
 
 export default withStyles(styles)(SimpleMediaCard);

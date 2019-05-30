@@ -33,7 +33,8 @@ const MenuProps = {
 
 const tags = [
   'Household Items', 
-  'Tools', 
+  'Tools',
+  'alex', 
   'Electronics', 
   'Physical Media', 
   'Sporting Goods', 
@@ -54,7 +55,7 @@ class MultipleSelect extends React.Component {
 
   render() {
     const { classes, theme, width_large,update_tags} = this.props;
-  
+    
     return (
       
       <div className={classes.root}>

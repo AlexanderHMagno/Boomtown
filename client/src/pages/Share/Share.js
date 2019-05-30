@@ -6,14 +6,18 @@ import React from 'react';
 
 */
 import ShareItemForm from '../../components/ShareItemForm';
-// import ShareItemPreview from '../../components/ShareItemPreview';
+import ShareItemPreview from '../../components/ShareItemPreview';
+import {INITIAL_STATE} from '../../redux/reducers';
+
 
 const Share = ({ classes }) => {
+  console.log({INITIAL_STATE})
   return (
-    <div>
-      <p>
+   <div>
+    {/* //     < ShareItemPreview title={INITIAL_STATE.name}/> */}
+   
         < ShareItemForm />
-      </p>
+      
     </div>
   );
 };
