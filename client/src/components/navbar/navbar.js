@@ -51,6 +51,7 @@ const styles = {
   }
 };
 
+//TODO: When to show the link
 const path_share = window.location.pathname === "/share";
 
 function ButtonAppBar(props) {
@@ -71,18 +72,23 @@ function ButtonAppBar(props) {
           </Link>
 
           <Typography color="inherit" className={classes.grow} />
-          <Link to="/share" className={classes.link_to}>
-            <Button color="inherit" className={classes.link_button_menu}>
-              <IconButton
-                className={classes.button_menu}
-                aria-label="Add to share something"
-                disabled="true"
-              >
-                <AddIcon color="primary" className={classes.button_menu_icon} />
-              </IconButton>
-              Share something
-            </Button>
-          </Link>
+          {path_share && (
+            <Link to="/share" className={classes.link_to}>
+              <Button color="inherit" className={classes.link_button_menu}>
+                <IconButton
+                  className={classes.button_menu}
+                  aria-label="Add to share something"
+                  disabled="true"
+                >
+                  <AddIcon
+                    color="primary"
+                    className={classes.button_menu_icon}
+                  />
+                </IconButton>
+                Share something
+              </Button>
+            </Link>
+          )}
 
           <LongMenu />
         </Toolbar>
