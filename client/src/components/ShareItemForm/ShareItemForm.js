@@ -9,10 +9,7 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import Tags from "./tags";
-import Store from "../../redux/index";
 import Share_Preview from "../ShareItemPreview";
-
-console.log(Store.getState().rootReducer.name);
 
 const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2));
@@ -28,7 +25,7 @@ class shareItemForm extends Component {
       image_button: false
     };
   }
-  s;
+
   dispatchUpdate(values, updateNewItem) {
     if (!values.imageurl && this.state.fileSelected) {
       this.getBase64Url().then(imageurl => {
@@ -44,6 +41,7 @@ class shareItemForm extends Component {
   }
 
   handleChange = name => event => {
+    console.log(name);
     this.setState({
       [name]: event.target.value
     });
@@ -54,6 +52,10 @@ class shareItemForm extends Component {
     string_tags == "."
       ? this.setState({ tags: "" })
       : this.setState({ tags: string_tags });
+  }
+
+  update_image(set_image) {
+    this.setState({ image_button: !set_image });
   }
   evaluate_button() {
     return (
@@ -68,17 +70,17 @@ class shareItemForm extends Component {
     return (
       <div className={classes.container}>
         <div className={classes.leftContainer}>
-          <Share_Preview
-            title={this.state.name}
-            description={this.state.description}
-            tags={this.state.tags}
-          />
+          <Share_Preview />
         </div>
         <div className={classes.rightContainer}>
           <Form
             onSubmit={onSubmit}
             render={({ handleSubmit, submitting, pristine, values }) => (
-              <form onSubmit={handleSubmit}>
+              <form
+                onSubmit={() => {
+                  console.log(handleSubmit);
+                }}
+              >
                 <FormSpy
                   subscription={{ values: true }}
                   component={args => {
@@ -158,17 +160,19 @@ class shareItemForm extends Component {
 
                 <br />
 
-                {!this.evaluate_button() && (
-                  <Button
-                    variant="contained"
-                    color="primary"
-                    className={classes.button_small}
-                  >
-                    SHARE
-                  </Button>
-                )}
+                {values.name &&
+                  values.description &&
+                  this.state.tags && (
+                    <Button
+                      variant="contained"
+                      color="primary"
+                      className={classes.button_small}
+                    >
+                      SHARE
+                    </Button>
+                  )}
 
-                {this.evaluate_button() && (
+                {!(values.name && values.description && this.state.tags) && (
                   <Button
                     variant="contained"
                     color="primary"
@@ -191,7 +195,6 @@ class shareItemForm extends Component {
 //   return reduxState
 // };
 const mapStateToProps = null;
-
 const mapDispatchToProps = dispatch => ({
   /*  This function will provide a prop called 
   'updateNewItem' to our component. */

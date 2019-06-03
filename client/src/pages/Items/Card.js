@@ -56,7 +56,6 @@ function ItemCard(props) {
     item_id,
     tags
   } = props;
-  console.log(tags);
   let fetchImg =
     imageUrl == null
       ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"

@@ -12,23 +12,19 @@ import Avatar from "@material-ui/core/Avatar";
 import styles from "./styles";
 
 function SharePreview(props) {
-  const { classes, title, description, imageUrl, tags, value } = props;
-  console.log("preview: ", value.rootReducer);
-  const item_image =
-    imageUrl === undefined
-      ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
-      : imageUrl;
+  const { classes, value } = props;
+  const { Image_url, name, tags, description } = value.rootReducer;
+  let share_button = name === "" || tags === "" || description === "";
 
-  const item_description =
-    description === "" ? "Describe Your Item" : description;
+  const item_image =
+    Image_url === ""
+      ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
+      : Image_url;
+
   return (
     <div>
       <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={item_image}
-          title={description}
-        />
+        <CardMedia className={classes.media} image={item_image} />
         <CardContent>
           <div className={classes.user_info_container}>
             <div>
@@ -54,16 +50,16 @@ function SharePreview(props) {
             </div>
           </div>
           <Typography gutterBottom variant="headline" component="h2">
-            {value.rootReducer.name}
+            {name}
           </Typography>
           <Typography component="p" className={classes.tags_Typo}>
-            {value.rootReducer.tags}
+            {tags}
           </Typography>
-          <Typography component="p">{value.rootReducer.description}</Typography>
+          <Typography component="p">{description}</Typography>
         </CardContent>
         <CardActions>
           <Button variant="outlined" className={classes.button}>
-            BORROW
+            {" BORROW" + share_button}
           </Button>
         </CardActions>
       </Card>

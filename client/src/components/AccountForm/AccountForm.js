@@ -148,7 +148,7 @@ const refetchQueries = [
     query: VIEWER_QUERY
   }
 ];
-// @TODO: Refetch the VIEWER_QUERY to reload the app and access authenticated routes.
+
 export default compose(
   graphql(SIGNUP_MUTATION, {
     options: {

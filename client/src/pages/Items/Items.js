@@ -63,27 +63,3 @@ Items.propTypes = {
 };
 
 export default withStyles(styles)(Items);
-
-// <div className={classes.root}>
-//   <Grid container spacing={24}>
-//     <Grid item xs={24} sm={12} md={8}>
-//       <Paper className={classes.paper}>xs=6 sm=3</Paper>
-//     </Grid>
-//   </Grid>
-// </div>;
-
-// <div style={divStyle}>
-//   <ul style={ulStyle}>
-//     {items.map(element => (
-//       <li style={liStyle} key={element.id}>
-//         <Card
-//           item_owner={element.itemowner.fullname}
-//           title={element.title}
-//           description={element.description}
-//           imageUrl={element.imageurl}
-//           item_id={element.id}
-//         />
-//       </li>
-//     ))}
-//   </ul>
-// </div>;
