@@ -33,17 +33,6 @@ const MenuProps = {
   }
 };
 
-// const tags = [
-//   "Household Items",
-//   "Tools",
-//   "alex",
-//   "Electronics",
-//   "Physical Media",
-//   "Sporting Goods",
-//   "Musical Instruments",
-//   "Recreational Equipment"
-// ];
-
 class ItemsContainer extends React.Component {
   render() {
     return (

@@ -72,13 +72,13 @@ function ButtonAppBar(props) {
           </Link>
 
           <Typography color="inherit" className={classes.grow} />
-          {path_share && (
+          {true && (
             <Link to="/share" className={classes.link_to}>
               <Button color="inherit" className={classes.link_button_menu}>
                 <IconButton
                   className={classes.button_menu}
                   aria-label="Add to share something"
-                  disabled="true"
+                  disabled
                 >
                   <AddIcon
                     color="primary"

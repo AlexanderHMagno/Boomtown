@@ -9,10 +9,11 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Avatar from "@material-ui/core/Avatar";
+import Gravatar from "react-gravatar";
 import styles from "./styles";
 
 function SharePreview(props) {
-  const { classes, value } = props;
+  const { classes, value, viewer } = props;
   const { Image_url, name, tags, description } = value.rootReducer;
   let share_button = name === "" || tags === "" || description === "";
 
@@ -28,7 +29,10 @@ function SharePreview(props) {
         <CardContent>
           <div className={classes.user_info_container}>
             <div>
-              <ImageAvatars />
+              <Gravatar
+                email={viewer.email + "/d=retro"}
+                className={classes.gravatar}
+              />
             </div>
             <div className={classes.user_info_right}>
               <Typography
@@ -37,7 +41,7 @@ function SharePreview(props) {
                 component="span"
                 className={classes.user_span}
               >
-                this user...
+                {viewer.fullname}
               </Typography>
               <Typography
                 gutterBottom
@@ -59,7 +63,7 @@ function SharePreview(props) {
         </CardContent>
         <CardActions>
           <Button variant="outlined" className={classes.button}>
-            {" BORROW" + share_button}
+            BORROW
           </Button>
         </CardActions>
       </Card>

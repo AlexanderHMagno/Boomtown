@@ -1,10 +1,10 @@
 import React from "react";
 import ShareItemForm from "../../components/ShareItemForm";
 
-const Share = ({ classes }) => {
+const Share = ({ classes, viewer }) => {
   return (
     <div>
-      <ShareItemForm />
+      <ShareItemForm viewer={viewer} />
     </div>
   );
 };

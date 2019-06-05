@@ -25,8 +25,11 @@ export default () => (
             <Menu />
             <Switch>
               <Route path="/items" component={Items} />
-              <Route path="/share" component={Share} />
-              <Route path="/profile" component={Profile} />
+              <Route path="/share" render={() => <Share viewer={viewer} />} />
+              <Route
+                path="/profile"
+                render={() => <Profile viewer={viewer} />}
+              />
               <Route
                 path="/profile/:id"
                 render={() => (component = { Profile })}
@@ -39,16 +42,3 @@ export default () => (
     }}
   </ViewerContext.Consumer>
 );
-
-// export default () => (
-//   <React.Fragment>
-//     <ViewerContext.Consumer>
-//       {({ viewer, loading }) => (
-//         <Switch>
-//           // ... Your routes
-//           <Redirect from="*" to="/items" />
-//         </Switch>
-//       )}
-//     </ViewerContext.Consumer>
-//   </React.Fragment>
-// );

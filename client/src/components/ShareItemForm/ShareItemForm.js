@@ -1,5 +1,3 @@
-//this is a test the real data is in shareItemForm1.
-
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import { updateNewItem } from "../../redux/reducers";
@@ -10,6 +8,7 @@ import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import Tags from "./tags";
 import Share_Preview from "../ShareItemPreview";
+import { ADD_ITEM_MUTATION } from "../../apollo/queries";
 
 const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2));
@@ -66,11 +65,12 @@ class shareItemForm extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes, viewer } = this.props;
+
     return (
       <div className={classes.container}>
         <div className={classes.leftContainer}>
-          <Share_Preview />
+          <Share_Preview viewer={viewer} />
         </div>
         <div className={classes.rightContainer}>
           <Form

@@ -6,6 +6,7 @@ import MoreVertIcon from "@material-ui/icons/MoreVert";
 import { Mutation } from "react-apollo";
 import { LOGOUT_MUTATION } from "../../apollo/queries";
 import client from "../../apollo";
+import { Link } from "react-router-dom";
 
 const options = ["Your Profile", "Sign Out"];
 
@@ -22,6 +23,11 @@ class LongMenu extends React.Component {
 
   handleClose = () => {
     this.setState({ anchorEl: null });
+  };
+
+  handleProfile = () => {
+    console.log("dataaa");
+    return window.location.pathname === "/profile";
   };
 
   render() {
@@ -56,20 +62,23 @@ class LongMenu extends React.Component {
               }}
             >
               {options.map(option => (
-                <MenuItem
-                  key={option}
-                  selected={option === "Pyxis"}
-                  onClick={() => {
-                    if (option == "Sign Out") {
-                      this.handleClose();
-                      return logout();
-                    } else {
-                      this.handleClose();
-                    }
-                  }}
-                >
-                  {option}
-                </MenuItem>
+                <Link to="/profile">
+                  <MenuItem
+                    key={option}
+                    selected={option === "Pyxis"}
+                    onClick={() => {
+                      if (option == "Sign Out") {
+                        this.handleClose();
+                        return logout();
+                      } else {
+                        this.handleClose();
+                        return this.handleProfile();
+                      }
+                    }}
+                  >
+                    {option}
+                  </MenuItem>
+                </Link>
               ))}
             </Menu>
           </div>
