@@ -8,160 +8,108 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Gravatar from "react-gravatar";
+import styles from "./styles";
 
-const styles = {
-  card: {
-    maxHeight: 500,
-    marginTop: 0
-  },
-  gravatar: {
-    borderRadius: "50%"
-  },
-  media: {
-    height: 0,
-    paddingTop: "56.25%" // 16:9
-  },
-  user_info_container: {
-    display: "flex",
-    marginBottom: "50px"
-  },
-  user_info_right: {
-    marginLeft: "10px"
-  },
-  user_span: {
-    margin: "0px"
-  },
-  spanTags: {
-    display: "inline",
-    textTransform: "capitalize",
-    marginRight: 5,
-    color: "grey"
-  }
-};
-const location = window.location.pathname === "/profile";
-const test1 = id => {
-  window.location.pathname = "profile";
-
-  window.item_id = id;
-};
-export const test2 = 0;
-
-class Share extends React.Component {
+class ItemCard extends React.Component {
   state = {
     location: ""
   };
-
   componentDidMount() {
     this.setState({
       location: window.location.pathname
     });
   }
-
-  handleChange = key => (event, value) => {
-    this.setState({
-      [key]: value
-    });
-  };
   render() {
-    const { classes, items } = this.props;
+    const {
+      classes,
+      title,
+      description,
+      imageUrl,
+      item_owner,
+      item_id,
+      tags
+    } = this.props;
+
+    let fetchImg =
+      imageUrl == null
+        ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
+        : imageUrl;
+
     const share_location = this.state.location === "/profile";
-    const { spacing } = this.state;
 
     return (
       <div>
-        {!share_location && (
-          <Button
-            variant="outlined"
-            className={classes.button}
-            onClick={() => "a"}
-            id={1}
-          >
-            BORROW
-          </Button>
-        )}
+        <Card className={classes.card}>
+          <CardMedia
+            className={classes.media}
+            image={fetchImg}
+            title={description}
+          />
+          <CardContent>
+            <div className={classes.user_info_container}>
+              <div>
+                <Gravatar
+                  email={item_owner + "@red.com/d=retro"}
+                  className={classes.gravatar}
+                />
+              </div>
+              <div className={classes.user_info_right}>
+                <Typography
+                  gutterBottom
+                  fontSize={12}
+                  component="span"
+                  className={classes.user_span}
+                >
+                  {item_owner}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  fontSize={2}
+                  component="span"
+                  className={classes.user_span}
+                >
+                  Hour TODO
+                </Typography>
+              </div>
+            </div>
+            <Typography gutterBottom variant="headline" component="h2">
+              {title}
+            </Typography>
+
+            {tags.map(element => {
+              return (
+                <Typography
+                  gutterBottom
+                  component="span"
+                  className={classes.spanTags}
+                >
+                  {element.title}
+                </Typography>
+              );
+            })}
+            <Typography
+              gutterBottom
+              component="span"
+              className={classes.spanTags}
+            />
+            <Typography component="p">{description}</Typography>
+            {!share_location && (
+              <Button
+                variant="outlined"
+                className={classes.button}
+                onClick={() => "a"}
+                id={1}
+              >
+                BORROW
+              </Button>
+            )}
+          </CardContent>
+
+          <CardActions />
+        </Card>
       </div>
     );
   }
-}
-
-function ItemCard(props) {
-  const {
-    classes,
-    title,
-    description,
-    imageUrl,
-    item_owner,
-    item_id,
-    tags
-  } = props;
-
-  let fetchImg =
-    imageUrl == null
-      ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
-      : imageUrl;
-
-  return (
-    <div>
-      <Card className={classes.card}>
-        <CardMedia
-          className={classes.media}
-          image={fetchImg}
-          title={description}
-        />
-        <CardContent>
-          <div className={classes.user_info_container}>
-            <div>
-              <Gravatar
-                email={item_owner + "@red.com/d=retro"}
-                className={classes.gravatar}
-              />
-            </div>
-            <div className={classes.user_info_right}>
-              <Typography
-                gutterBottom
-                fontSize={12}
-                component="span"
-                className={classes.user_span}
-              >
-                {item_owner}
-              </Typography>
-              <Typography
-                gutterBottom
-                fontSize={2}
-                component="span"
-                className={classes.user_span}
-              >
-                Hour TODO
-              </Typography>
-            </div>
-          </div>
-          <Typography gutterBottom variant="headline" component="h2">
-            {title}
-          </Typography>
-
-          {tags.map(element => {
-            return (
-              <Typography
-                gutterBottom
-                component="span"
-                className={classes.spanTags}
-              >
-                {element.title}
-              </Typography>
-            );
-          })}
-          <Typography
-            gutterBottom
-            component="span"
-            className={classes.spanTags}
-          />
-          <Typography component="p">{description}</Typography>
-        </CardContent>
-        <Share classes={classes} />
-        <CardActions />
-      </Card>
-    </div>
-  );
 }
 
 ItemCard.propTypes = {

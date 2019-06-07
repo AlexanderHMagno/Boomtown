@@ -31,6 +31,14 @@ const styles = theme => ({
   },
   gravatar: {
     borderRadius: "50%"
+  },
+  sharedTitle: {
+    color: "#f9a825",
+    fontSize: "35px",
+    fontWeight: "bold",
+    marginLeft: "5%",
+    marginTop: "1.5%",
+    position: "absolute"
   }
 });
 
@@ -72,15 +80,15 @@ function Profile(props) {
                   {viewer.bio ? viewer.bio : '"No bio provided."'}
                 </Typography>
               </Paper>
+
+              <Typography
+                variant="headline"
+                component="h1"
+                className={classes.sharedTitle}
+              >
+                Shared Items
+              </Typography>
               <Items items={user} />
-              {/* // <Card
-            //   item_owner={"element.itemowner.fullname"}
-            //   title={"alexander"}
-            //   description={"element.description"}
-            //   imageUrl={null}
-            //   tags={[{ id: "30", title: "black", __typename: "Tag" }]}
-            //   item_id={1}
-            // /> */}
             </div>
           );
         }}

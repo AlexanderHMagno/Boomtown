@@ -35,8 +35,6 @@ class Items extends React.Component {
   };
   render() {
     const { classes, items } = this.props;
-    const { spacing } = this.state;
-    console.log(items);
 
     return (
       <div className={classes.root}>
