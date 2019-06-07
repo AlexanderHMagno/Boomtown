@@ -38,13 +38,51 @@ const styles = {
     color: "grey"
   }
 };
-
+const location = window.location.pathname === "/profile";
 const test1 = id => {
   window.location.pathname = "profile";
 
   window.item_id = id;
 };
 export const test2 = 0;
+
+class Share extends React.Component {
+  state = {
+    location: ""
+  };
+
+  componentDidMount() {
+    this.setState({
+      location: window.location.pathname
+    });
+  }
+
+  handleChange = key => (event, value) => {
+    this.setState({
+      [key]: value
+    });
+  };
+  render() {
+    const { classes, items } = this.props;
+    const share_location = this.state.location === "/profile";
+    const { spacing } = this.state;
+
+    return (
+      <div>
+        {!share_location && (
+          <Button
+            variant="outlined"
+            className={classes.button}
+            onClick={() => "a"}
+            id={1}
+          >
+            BORROW
+          </Button>
+        )}
+      </div>
+    );
+  }
+}
 
 function ItemCard(props) {
   const {
@@ -56,6 +94,7 @@ function ItemCard(props) {
     item_id,
     tags
   } = props;
+
   let fetchImg =
     imageUrl == null
       ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
@@ -118,16 +157,8 @@ function ItemCard(props) {
           />
           <Typography component="p">{description}</Typography>
         </CardContent>
-        <CardActions>
-          <Button
-            variant="outlined"
-            className={classes.button}
-            onClick={() => test1(item_id)}
-            id={item_id}
-          >
-            BORROW
-          </Button>
-        </CardActions>
+        <Share classes={classes} />
+        <CardActions />
       </Card>
     </div>
   );

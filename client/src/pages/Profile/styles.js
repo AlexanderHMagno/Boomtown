@@ -1,6 +1,6 @@
 const styles = theme => ({
   back: {
-    background: "#0a0a0ae6",
+    background: "black",
     height: "100vh",
     witdh: "100vw",
     paddingTop: "40px"

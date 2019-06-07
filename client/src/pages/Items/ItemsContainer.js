@@ -14,6 +14,7 @@ class ItemsContainer extends Component {
           //if (loading) return <FullScreenLoader inverted />;
           if (loading) return <p>Loading...</p>;
           if (error) return <p>{`Error! ${error.message}`}</p>;
+          console.log("data.items", data.items);
           return <Items classes={this.props.classes} items={data.items} />;
         }}
       </Query>
