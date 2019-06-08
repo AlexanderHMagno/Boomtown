@@ -8,19 +8,13 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import Avatar from "@material-ui/core/Avatar";
 import Gravatar from "react-gravatar";
-import styles from "./styles";
+import styles, { placeholder } from "./styles";
 
 function SharePreview(props) {
   const { classes, value, viewer } = props;
-  const { Image_url, name, tags, description } = value.rootReducer;
-  let share_button = name === "" || tags === "" || description === "";
-
-  const item_image =
-    Image_url === ""
-      ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
-      : Image_url;
+  const { image_url, name, tags, description } = value.rootReducer;
+  const item_image = image_url === null ? placeholder : image_url;
 
   return (
     <div>
@@ -72,22 +66,6 @@ function SharePreview(props) {
 }
 
 SharePreview.propTypes = {
-  classes: PropTypes.object.isRequired
-};
-
-function ImageAvatars(props) {
-  const { classes } = props;
-  return (
-    <div>
-      <Avatar
-        alt="Logo"
-        src="https://cdn.pixabay.com/photo/2016/04/15/18/05/computer-1331579_1280.png"
-      />
-    </div>
-  );
-}
-
-ImageAvatars.propTypes = {
   classes: PropTypes.object.isRequired
 };
 

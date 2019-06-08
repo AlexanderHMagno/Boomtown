@@ -28,3 +28,6 @@ const styles = {
 };
 
 export default styles;
+
+export const placeholder =
+  "http://via.placeholder.com/350x250?text=Please%20select%20an%20image";

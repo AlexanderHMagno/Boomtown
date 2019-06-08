@@ -45,7 +45,7 @@ module.exports = gql`
 
   input AssignedTag {
     id: ID!
-    title: String!
+    title: String
   }
 
   input AssignedBorrower {
@@ -57,6 +57,7 @@ module.exports = gql`
 
   input NewItemInput {
     title: String!
+    image: String
     description: String
     owner: [AssignedOwner]!
     borrower: [AssignedBorrower]

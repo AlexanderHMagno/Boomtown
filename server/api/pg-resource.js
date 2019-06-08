@@ -127,88 +127,51 @@ module.exports = postgres => {
       return tags.rows;
     },
     async saveNewItem({ item, user }) {
-      //still working on this, still basic.
-      console.log("item ", item);
-      console.log("user ", user);
-
-      let borrower = item.borrower == null ? null : item.borrower[0].id;
-
-      const tagsQuery = {
-        text: `INSERT INTO items (title,description,ownerid,borrowerid) 
-               VALUES ($1,$2,$3,$4)`, // @TODO: Advanced queries
-        values: [item.title, item.description, item.owner[0].id, borrower]
-      };
-
-      const tags = await postgres.query(tagsQuery);
-      console.log("tags.row", tags);
-
-      return null;
-      /**
-       *  @TODO: Adding a New Item
-       *
-       *  Adding a new Item to Posgtres is the most advanced query.
-       *  It requires 3 separate INSERT statements.
-       *
-       *  All of the INSERT statements must:
-       *  1) Proceed in a specific order.
-       *  2) Succeed for the new Item to be considered added
-       *  3) If any of the INSERT queries fail, any successful INSERT
-       *     queries should be 'rolled back' to avoid 'orphan' data in the database.
-       *
-       *  To achieve #3 we'll ue something called a Postgres Transaction!
-       *  The code for the transaction has been provided for you, along with
-       *  helpful comments to help you get started.
-       *
-       *  Read the method and the comments carefully before you begin.
-       */
-
       return new Promise((resolve, reject) => {
-        /**
-         * Begin transaction by opening a long-lived connection
-         * to a client from the client pool.
-         * - Read about transactions here: https://node-postgres.com/features/transactions
-         */
         postgres.connect((err, client, done) => {
           try {
-            // Begin postgres transaction
             client.query("BEGIN", async err => {
-              const { title, description, tags } = item;
+              let borrower = item.borrower == null ? null : item.borrower[0].id;
+              // insert new item mutation
+              const tagsQuery = {
+                text: `INSERT INTO items (title,imageurl,description,ownerid,borrowerid) 
+                       VALUES ($1,$2,$3,$4,$5) RETURNING *`, // @TODO: Advanced queries
+                values: [
+                  item.title,
+                  item.image,
+                  item.description,
+                  item.owner[0].id,
+                  borrower
+                ]
+              };
+              // async the new item mutation
+              const newValue = await postgres.query(tagsQuery);
 
-              // Generate new Item query
-              // @TODO
-              // -------------------------------
-
-              // Insert new Item
-              // @TODO
-              // -------------------------------
-
-              // Generate tag relationships query (use the'tagsQueryString' helper function provided)
-              // @TODO
-              // -------------------------------
-
-              // Insert tags
-              // @TODO
-              // -------------------------------
-
-              // Commit the entire transaction!
+              // Once received the new id... we can create the other insertion.
+              const insertTags = {
+                text: `INSERT INTO itemtags (tagid ,itemid ) VALUES ${tagsQueryString(
+                  [...item.tags],
+                  newValue.rows[0].id,
+                  ""
+                )}`,
+                values: item.tags.map(tag => tag.id)
+              };
+              // make async
+              await postgres.query(insertTags);
               client.query("COMMIT", err => {
                 if (err) {
                   throw err;
                 }
-                // release the client back to the pool
-                done();
-                // Uncomment this resolve statement when you're ready!
-                // resolve(newItem.rows[0])
-                // -------------------------------
+
+                done(); // use commit transaction to resolve newItem.rows[0]
+                resolve(newValue.rows[0]);
               });
             });
           } catch (e) {
-            // Something went wrong
             client.query("ROLLBACK", err => {
               if (err) {
                 throw err;
               }
-              // release the client back to the pool
               done();
             });
             switch (true) {
@@ -221,27 +184,3 @@ module.exports = postgres => {
     }
   };
 };
-
-// const { Pool } = require('pg')
-// const pool = new Pool()
-
-// (async () => {
-//   // note: we don't try/catch this because if connecting throws an exception
-//   // we don't need to dispose of the client (it will be undefined)
-//   const client = await pool.connect()
-
-//   try {
-//     await client.query('BEGIN')
-//     const { rows } = await client.query('INSERT INTO users(name) VALUES($1) RETURNING id', ['brianc'])
-
-//     const insertPhotoText = 'INSERT INTO photos(user_id, photo_url) VALUES ($1, $2)'
-//     const insertPhotoValues = [res.rows[0].id, 's3.bucket.foo']
-//     await client.query(insertPhotoText, insertPhotoValues)
-//     await client.query('COMMIT')
-//   } catch (e) {
-//     await client.query('ROLLBACK')
-//     throw e
-//   } finally {
-//     client.release()
-//   }
-// })().catch(e => console.error(e.stack))

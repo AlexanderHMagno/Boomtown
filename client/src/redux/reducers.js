@@ -22,7 +22,7 @@ export const resteItem = () => {
 
 // STORE
 export const INITIAL_STATE = {
-  Image_url: "",
+  image_url: "",
   name: "Initial Name",
   description: "Initial description",
   tags: "",

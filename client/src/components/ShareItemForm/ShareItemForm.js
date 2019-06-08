@@ -13,10 +13,13 @@ import { ADD_ITEM_MUTATION } from "../../apollo/queries";
 const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2));
 };
+
 class shareItemForm extends Component {
   constructor(props) {
     super(props);
+    this.fileRef = React.createRef();
     this.state = {
+      image_url: null,
       name: "",
       description: "",
       tags: "",
@@ -25,17 +28,32 @@ class shareItemForm extends Component {
     };
   }
 
-  dispatchUpdate(values, updateNewItem) {
-    if (!values.imageurl && this.state.fileSelected) {
-      this.getBase64Url().then(imageurl => {
-        updateNewItem({
-          imageurl
+  fileSelectedHandler = event => {
+    const file = event.target.files[0];
+    if (file) {
+      this.getBase64Url(file).then(image_url => {
+        this.setState({
+          image_url: image_url
         });
       });
     }
+  };
+
+  getBase64Url(fileSelected) {
+    return new Promise(resolve => {
+      const reader = new FileReader();
+      reader.onload = e => {
+        resolve(`data:${fileSelected.type};base64, ${btoa(e.target.result)}`);
+      };
+      reader.readAsBinaryString(fileSelected);
+    });
+  }
+
+  dispatchUpdate(values, updateNewItem) {
     this.props.updateNewItem({
       ...values,
-      tags: this.state.tags
+      tags: this.state.tags,
+      image_url: this.state.image_url
     });
   }
 
@@ -54,7 +72,7 @@ class shareItemForm extends Component {
   }
 
   update_image(set_image) {
-    this.setState({ image_button: !set_image });
+    this.setState({ image_url: null });
   }
   evaluate_button() {
     return (
@@ -93,23 +111,32 @@ class shareItemForm extends Component {
                 <h1 className={classes.title}>
                   Share. Borrow.<br /> Prosper.
                 </h1>
-                {!this.state.image_button ? (
-                  <Button
-                    variant="contained"
-                    size="large"
-                    color="primary"
-                    className={classes.button_large}
-                    onClick={() => this.update_image(this.state.image_button)}
-                  >
-                    SELECT AN IMAGE
-                  </Button>
+                {!this.state.image_url ? (
+                  <div>
+                    <Button
+                      variant="contained"
+                      size="large"
+                      color="primary"
+                      className={classes.button_large}
+                      type="file"
+                      onClick={() => console.log()}
+                    >
+                      SELECT AN IMAGE
+                      <input
+                        type="file"
+                        onChange={this.fileSelectedHandler}
+                        ref={this.fileRef}
+                        className={classes.picker}
+                      />
+                    </Button>
+                  </div>
                 ) : (
                   <Button
                     variant="contained"
                     size="large"
                     component="span"
                     className={classes.button_large_off}
-                    onClick={() => this.update_image(this.state.image_button)}
+                    onClick={() => this.update_image()}
                   >
                     RESET IMAGE
                   </Button>
@@ -135,7 +162,6 @@ class shareItemForm extends Component {
                   {({ input, meta }) => (
                     <TextField
                       id="multiline-static"
-                      // label="Describe Your Item"
                       placeholder="Describe Your Item"
                       multiline
                       rows="4"
@@ -162,7 +188,8 @@ class shareItemForm extends Component {
 
                 {values.name &&
                   values.description &&
-                  this.state.tags && (
+                  this.state.tags &&
+                  this.state.image_url && (
                     <Button
                       variant="contained"
                       color="primary"
@@ -172,7 +199,12 @@ class shareItemForm extends Component {
                     </Button>
                   )}
 
-                {!(values.name && values.description && this.state.tags) && (
+                {!(
+                  values.name &&
+                  values.description &&
+                  this.state.tags &&
+                  this.state.image_url
+                ) && (
                   <Button
                     variant="contained"
                     color="primary"
