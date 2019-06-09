@@ -24,7 +24,7 @@ export default () => (
           <Fragment>
             <Menu />
             <Switch>
-              <Route path="/items" component={Items} />
+              <Route path="/items" render={() => <Items />} />
               <Route path="/share" render={() => <Share viewer={viewer} />} />
               <Route
                 path="/profile"

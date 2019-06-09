@@ -57,14 +57,23 @@ class ItemsContainer extends React.Component {
 
 class MultipleSelect extends React.Component {
   state = {
-    tags: []
+    tags: [],
+    preTags: []
   };
 
   handleChange = event => {
-    console.log(event.target.value);
-    this.setState({ tags: event.target.value });
     let { update_tags } = this.props;
-    update_tags(event.target.value);
+    let target = event.target.value;
+    let tag_already_created = target.filter(
+      element => element.title === target[target.length - 1].title
+    );
+    if (tag_already_created.length > 1) {
+      target = target.filter(
+        tag => tag.title != target[target.length - 1].title
+      );
+    }
+    this.setState({ tags: target });
+    update_tags(target);
   };
 
   render() {
@@ -79,12 +88,20 @@ class MultipleSelect extends React.Component {
             value={this.state.tags}
             onChange={this.handleChange}
             input={<Input id="select-multiple-checkbox" />}
-            renderValue={selected => selected.join(", ")}
+            renderValue={selected =>
+              selected.map(element => element.title).join(", ")
+            }
             MenuProps={MenuProps}
           >
             {tags.tags.map(tag => (
-              <MenuItem key={tag.id} value={tag.title}>
-                <Checkbox checked={this.state.tags.indexOf(tag.title) > -1} />
+              <MenuItem key={tag.id} value={{ title: tag.title, id: tag.id }}>
+                <Checkbox
+                  checked={
+                    this.state.tags.filter(
+                      element => element.title === tag.title
+                    ).length > 0
+                  }
+                />
                 <ListItemText primary={tag.title} />
               </MenuItem>
             ))}

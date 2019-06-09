@@ -61,7 +61,7 @@ module.exports = gql`
     description: String
     owner: [AssignedOwner]!
     borrower: [AssignedBorrower]
-    tags: [AssignedTag]!
+    tags: [AssignedTag]
   }
 
   type Query {

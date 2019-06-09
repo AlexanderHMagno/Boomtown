@@ -7,6 +7,13 @@ import { Query } from "react-apollo";
 import { ALL_ITEMS_QUERY } from "../../apollo/queries";
 
 class ItemsContainer extends Component {
+  constructor(props) {
+    super(props);
+  }
+  componentDidMount() {
+    console.log("reloading");
+  }
+
   render() {
     return (
       <Query query={ALL_ITEMS_QUERY}>
