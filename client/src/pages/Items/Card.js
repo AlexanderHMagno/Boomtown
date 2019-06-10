@@ -78,9 +78,7 @@ class ItemCard extends React.Component {
                   fontSize={2}
                   component="span"
                   className={classes.user_span}
-                >
-                  Hour TODO
-                </Typography>
+                />
               </div>
             </div>
             <Typography gutterBottom variant="headline" component="h2">

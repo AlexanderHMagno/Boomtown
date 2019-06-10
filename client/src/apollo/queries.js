@@ -1,9 +1,5 @@
 import gql from "graphql-tag";
 
-/**
- * Item and user-related queries and mutations.
- */
-
 const ItemFields = gql`
   fragment ItemFields on Item {
     id
