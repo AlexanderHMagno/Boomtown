@@ -43,14 +43,7 @@ class Items extends React.Component {
           {items.map(element => (
             <Grid item xs={12} sm={6} md={4}>
               <Grow>
-                <Card
-                  item_owner={element.itemowner}
-                  title={element.title}
-                  description={element.description}
-                  imageUrl={element.imageurl}
-                  tags={element.tags}
-                  item_id={element.id}
-                />
+                <Card element={element} />
               </Grow>
             </Grid>
           ))}

@@ -51,13 +51,13 @@ function Profile(props) {
           {
             /* How to pass variables in a query */
           }
-          console.log(props);
+
           //if (loading) return <FullScreenLoader inverted />;
           if (loading) return <p>Loading...</p>;
           if (error) return <p>{`Error! ${error.message}`}</p>;
 
           let user = data.user.items !== undefined ? data.user.items : "";
-          console.log(user.length);
+
           return (
             <div>
               <Paper className={classes.root} elevation={4}>

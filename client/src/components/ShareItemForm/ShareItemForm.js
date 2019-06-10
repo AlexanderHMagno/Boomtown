@@ -63,7 +63,6 @@ class shareItemForm extends Component {
   }
 
   handleChange = name => event => {
-    console.log(name);
     this.setState({
       [name]: event.target.value
     });
@@ -82,7 +81,6 @@ class shareItemForm extends Component {
           tags: string_tags,
           query_tags: new_query_tags
         });
-    console.log(this.state.query_tags);
   }
 
   update_image(set_image) {
@@ -129,7 +127,6 @@ class shareItemForm extends Component {
                       });
                     }}
                   >
-                    {console.log("data", data)}
                     <FormSpy
                       subscription={{ values: true }}
                       component={args => {

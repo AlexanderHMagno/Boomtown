@@ -107,18 +107,15 @@ npm run test
 
 ## Most important technologies. 
 
-* React Final Form 
+
 [🏁 Final Form](https://github.com/final-form/final-form#-final-form)
 
 🏁 React Final Form is a thin React wrapper for 🏁 Final Form, which is a subscriptions-based form state management library that uses the Observer pattern, so only the components that need updating are re-rendered as the form's state changes. By default, 🏁 React Final Form subscribes to all changes, but if you want to fine tune your form to optimized blazing-fast perfection, you may specify only the form state that you care about for rendering your gorgeous UI.
 
-* Material UI 
-(https://material-ui.com/)
+[Material UI](https://material-ui.com/)
 
-MATERIAL-UI
 React components for faster and easier web development. Build your own design system, or start with Material Design.
 
-* GraphQl and Apollo
 
 [GraphQl](https://www.graphql.com/)
 
@@ -131,7 +128,6 @@ Replace many inflexible APIs with a single versatile query system.
 Decouple frontend and backend development.
 Ship high quality apps to more platforms faster.
 
-* Redux 
 
 [Redux](https://redux.js.org/)
 
@@ -142,8 +138,6 @@ Redux helps you write applications that behave consistently, run in different en
 Centralized
 
 Centralizing your application's state and logic enables powerful capabilities like undo/redo, state persistence, and much more.
-
-* React
 
 [React](https://reactjs.org/)
 

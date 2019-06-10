@@ -31,20 +31,13 @@ class ItemCard extends React.Component {
     });
   }
   render() {
-    const {
-      classes,
-      title,
-      description,
-      imageUrl,
-      item_owner,
-      item_id,
-      tags
-    } = this.props;
+    const { classes, element } = this.props;
+    const { title, description, tags, imageurl, itemowner } = element;
 
     let fetchImg =
-      imageUrl == null
+      imageurl == null
         ? "http://via.placeholder.com/350x250?text=Please%20select%20an%20image"
-        : imageUrl;
+        : imageurl;
 
     const share_location = this.state.location === "/profile";
 
@@ -60,7 +53,7 @@ class ItemCard extends React.Component {
             <div className={classes.user_info_container}>
               <div>
                 <Gravatar
-                  email={item_owner.fullname + "@red.com/d=retro"}
+                  email={itemowner.fullname + "@red.com/d=retro"}
                   className={classes.gravatar}
                 />
               </div>
@@ -71,14 +64,16 @@ class ItemCard extends React.Component {
                   component="span"
                   className={classes.user_span}
                 >
-                  {item_owner.fullname}
+                  {itemowner.fullname}
                 </Typography>
                 <Typography
                   gutterBottom
                   fontSize={2}
                   component="span"
                   className={classes.user_span}
-                />
+                >
+                  {}
+                </Typography>
               </div>
             </div>
             <Typography gutterBottom variant="headline" component="h2">
@@ -118,9 +113,9 @@ class ItemCard extends React.Component {
                 to={{
                   path: "/profile",
                   viewer: {
-                    id: item_owner.id,
-                    email: item_owner.email,
-                    fullname: item_owner.fullname,
+                    id: itemowner.id,
+                    email: itemowner.email,
+                    fullname: itemowner.fullname,
                     bio: null
                   }
                 }}

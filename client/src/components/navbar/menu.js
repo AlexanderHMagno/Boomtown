@@ -26,7 +26,6 @@ class LongMenu extends React.Component {
   };
 
   handleProfile = () => {
-    console.log("dataaa");
     return window.location.pathname === "/profile";
   };
 
