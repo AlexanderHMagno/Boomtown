@@ -9,14 +9,25 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Gravatar from "react-gravatar";
 import styles from "./styles";
+import Profile from "../Profile";
+import { Redirect, Route, Switch } from "react-router";
+import { Link } from "react-router-dom";
 
 class ItemCard extends React.Component {
   state = {
-    location: ""
+    location: "",
+    button_pressed: false
   };
   componentDidMount() {
     this.setState({
       location: window.location.pathname
+    });
+  }
+
+  button_pressed_toggle() {
+    let new_state = !this.state.button_pressed;
+    this.setState({
+      button_pressed: new_state
     });
   }
   render() {
@@ -49,7 +60,7 @@ class ItemCard extends React.Component {
             <div className={classes.user_info_container}>
               <div>
                 <Gravatar
-                  email={item_owner + "@red.com/d=retro"}
+                  email={item_owner.fullname + "@red.com/d=retro"}
                   className={classes.gravatar}
                 />
               </div>
@@ -60,7 +71,7 @@ class ItemCard extends React.Component {
                   component="span"
                   className={classes.user_span}
                 >
-                  {item_owner}
+                  {item_owner.fullname}
                 </Typography>
                 <Typography
                   gutterBottom
@@ -97,11 +108,25 @@ class ItemCard extends React.Component {
               <Button
                 variant="outlined"
                 className={classes.button}
-                onClick={() => "a"}
+                onClick={() => this.button_pressed_toggle()}
                 id={1}
               >
                 BORROW
               </Button>
+            )}
+
+            {this.state.button_pressed && (
+              <Redirect
+                to={{
+                  path: "/profile",
+                  viewer: {
+                    id: item_owner.id,
+                    email: item_owner.email,
+                    fullname: item_owner.fullname,
+                    bio: null
+                  }
+                }}
+              />
             )}
           </CardContent>
 

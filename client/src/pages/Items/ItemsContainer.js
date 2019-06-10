@@ -15,8 +15,9 @@ class ItemsContainer extends Component {
   }
 
   render() {
+    const { viewer } = this.props;
     return (
-      <Query query={ALL_ITEMS_QUERY}>
+      <Query query={ALL_ITEMS_QUERY} variables={{ filter: viewer.id }}>
         {({ loading, error, data }) => {
           //if (loading) return <FullScreenLoader inverted />;
           if (loading) return <p>Loading...</p>;

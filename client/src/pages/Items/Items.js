@@ -3,6 +3,7 @@ import Card from "./Card";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Grid from "@material-ui/core/Grid";
+import Grow from "@material-ui/core/Grow";
 
 const styles = theme => ({
   root: {
@@ -41,14 +42,16 @@ class Items extends React.Component {
         <Grid container spacing={40} className={classes.gridContainer}>
           {items.map(element => (
             <Grid item xs={12} sm={6} md={4}>
-              <Card
-                item_owner={element.itemowner.fullname}
-                title={element.title}
-                description={element.description}
-                imageUrl={element.imageurl}
-                tags={element.tags}
-                item_id={element.id}
-              />
+              <Grow>
+                <Card
+                  item_owner={element.itemowner}
+                  title={element.title}
+                  description={element.description}
+                  imageUrl={element.imageurl}
+                  tags={element.tags}
+                  item_id={element.id}
+                />
+              </Grow>
             </Grid>
           ))}
         </Grid>

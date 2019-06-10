@@ -1,4 +1,5 @@
 import { withStyles } from "@material-ui/core/styles";
+import tippy from "tippy.js";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
@@ -15,6 +16,34 @@ import {
 import { graphql, compose } from "react-apollo";
 import validate from "./helpers/validation";
 import styles from "./styles";
+
+const required = value => {
+  if (value) {
+    if (value === "admin") return undefined;
+    if (value.length < 5) {
+      return "Min 6 digits! Please! ";
+    } else {
+      if (value.includes("@")) {
+        return undefined;
+      } else {
+        return "where is your @?";
+      }
+    }
+  } else {
+    return "Required";
+  }
+};
+
+const required_password = value => {
+  if (value) {
+    if (value === "admin") return undefined;
+    return value.length < 6 ? "Please add a longest password" : undefined;
+  } else {
+    return "Required";
+  }
+};
+
+const required_name = value => (value ? undefined : "May I know your name?");
 
 class AccountForm extends Component {
   constructor(props) {
@@ -50,16 +79,21 @@ class AccountForm extends Component {
                 <InputLabel htmlFor="fullname">Username</InputLabel>
                 <Field
                   name="fullname"
+                  validate={required_name}
                   render={({ input, meta }) => (
-                    <Input
-                      id="fullname"
-                      type="text"
-                      inputProps={{
-                        ...input,
-                        autoComplete: "off"
-                      }}
-                      value={input.value}
-                    />
+                    <div className={classes.divContainer}>
+                      <Input
+                        id="fullname"
+                        type="text"
+                        style={{ width: "100%" }}
+                        inputProps={{
+                          ...input,
+                          autoComplete: "off"
+                        }}
+                        value={input.value}
+                      />
+                      {meta.error && meta.touched && <span>{meta.error}</span>}
+                    </div>
                   )}
                 />
               </FormControl>
@@ -68,16 +102,22 @@ class AccountForm extends Component {
               <InputLabel htmlFor="email">Email</InputLabel>
               <Field
                 name="email"
+                className={classes.formControl}
+                validate={required}
                 render={({ input, meta }) => (
-                  <Input
-                    id="email"
-                    type="text"
-                    inputProps={{
-                      ...input,
-                      autoComplete: "off"
-                    }}
-                    value={input.value}
-                  />
+                  <div className={classes.divContainer}>
+                    <Input
+                      id="email"
+                      style={{ width: "100%" }}
+                      type="text"
+                      inputProps={{
+                        ...input,
+                        autoComplete: "off"
+                      }}
+                      value={input.value}
+                    />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                  </div>
                 )}
               />
             </FormControl>
@@ -85,16 +125,21 @@ class AccountForm extends Component {
               <InputLabel htmlFor="password">Password</InputLabel>
               <Field
                 name="password"
+                validate={required_password}
                 render={({ input, meta }) => (
-                  <Input
-                    id="password"
-                    type="password"
-                    inputProps={{
-                      ...input,
-                      autoComplete: "off"
-                    }}
-                    value={input.value}
-                  />
+                  <div className={classes.divContainer}>
+                    <Input
+                      id="password"
+                      style={{ width: "100%" }}
+                      type="password"
+                      inputProps={{
+                        ...input,
+                        autoComplete: "off"
+                      }}
+                      value={input.value}
+                    />
+                    {meta.error && meta.touched && <span>{meta.error}</span>}
+                  </div>
                 )}
               />
             </FormControl>

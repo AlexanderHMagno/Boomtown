@@ -51,7 +51,7 @@ function Profile(props) {
           {
             /* How to pass variables in a query */
           }
-          console.log(data);
+          console.log(props);
           //if (loading) return <FullScreenLoader inverted />;
           if (loading) return <p>Loading...</p>;
           if (error) return <p>{`Error! ${error.message}`}</p>;
