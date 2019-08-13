@@ -1,5 +1,4 @@
 import { withStyles } from "@material-ui/core/styles";
-import tippy from "tippy.js";
 import Button from "@material-ui/core/Button";
 import FormControl from "@material-ui/core/FormControl";
 import Grid from "@material-ui/core/Grid";
@@ -154,9 +153,7 @@ class AccountForm extends Component {
                 </Typography>
               </Grid>
             </FormControl>
-            <Typography className={classes.errorMessage}>
-              {/* @TODO: Display sign-up and login errors */}
-            </Typography>
+            <Typography className={classes.errorMessage} />
           </form>
         )}
       />

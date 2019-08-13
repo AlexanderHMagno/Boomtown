@@ -21,7 +21,7 @@ module.exports = postgres => {
     async createUser({ fullname, email, password }) {
       const newUserInsert = {
         text:
-          "INSERT INTO users (fullname ,email ,password) VALUES ($1, $2, $3) RETURNING *", // @TODO: Authentication - Server
+          "INSERT INTO users (fullname ,email ,password) VALUES ($1, $2, $3) RETURNING *",
         values: [fullname, email, password]
       };
       try {
@@ -135,7 +135,7 @@ module.exports = postgres => {
               // insert new item mutation
               const tagsQuery = {
                 text: `INSERT INTO items (title,imageurl,description,ownerid,borrowerid) 
-                       VALUES ($1,$2,$3,$4,$5) RETURNING *`, // @TODO: Advanced queries
+                       VALUES ($1,$2,$3,$4,$5) RETURNING *`,
                 values: [
                   item.title,
                   item.image,

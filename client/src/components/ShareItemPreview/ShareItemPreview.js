@@ -43,7 +43,7 @@ function SharePreview(props) {
                 component="span"
                 className={classes.user_span}
               >
-                Hour TODO
+                Hour
               </Typography>
             </div>
           </div>

@@ -2,7 +2,6 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { MuiThemeProvider } from "@material-ui/core/styles";
 import CssBaseline from "@material-ui/core/CssBaseline";
-// @TODO: Uncomment each module as needed in your client app
 import { ApolloProvider } from "react-apollo";
 import { BrowserRouter } from "react-router-dom";
 import { Provider as ReduxProvider } from "react-redux";

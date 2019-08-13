@@ -25,8 +25,6 @@ const ItemFields = gql`
     }
   }
 `;
-
-//# @TODO: Query an item by its id and return the ItemFields fragment.
 export const ITEM_QUERY = Item_Id => {
   return gql`
   query {
