@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import { component } from "react";
+// import { component } from "react";
 import { Redirect, Route, Switch } from "react-router";
 import Items from "../pages/Items";
 import Home from "../pages/Home";
@@ -30,10 +30,10 @@ export default () => (
                 path="/profile"
                 render={() => <Profile viewer={viewer} />}
               />
-              <Route
+              {/* <Route
                 path="/profile/:id"
                 render={() => (component = { Profile })}
-              />
+              /> */}
               <Redirect from="*" to="/items" />
             </Switch>
           </Fragment>

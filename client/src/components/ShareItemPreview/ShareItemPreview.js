@@ -9,17 +9,23 @@ import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import Gravatar from "react-gravatar";
+import Loader from "react-loader-spinner";
 import styles, { placeholder } from "./styles";
 
-function SharePreview(props) {
+let SharePreview = props => {
   const { classes, value, viewer } = props;
   const { image_url, name, tags, description } = value.rootReducer;
-  const item_image = image_url === null ? placeholder : image_url;
+  const item_image = image_url ? image_url : placeholder;
 
   return (
     <div>
       <Card className={classes.card}>
-        <CardMedia className={classes.media} image={item_image} />
+        {item_image ? (
+          <CardMedia className={classes.media} image={item_image} />
+        ) : (
+          <Loader type="Puff" color="#00BFFF" height={100} width={100} />
+        )}
+
         <CardContent>
           <div className={classes.user_info_container}>
             <div>
@@ -63,7 +69,7 @@ function SharePreview(props) {
       </Card>
     </div>
   );
-}
+};
 
 SharePreview.propTypes = {
   classes: PropTypes.object.isRequired

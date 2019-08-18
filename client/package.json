@@ -30,6 +30,7 @@
     "react-file-picker": "0.0.6",
     "react-final-form": "^3.6.2",
     "react-gravatar": "^2.6.3",
+    "react-loader-spinner": "^3.1.2",
     "react-redux": "^5.0.7",
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",

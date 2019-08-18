@@ -1,6 +1,25 @@
-const styles = theme => ({
+export const imageBase =
+  "http://via.placeholder.com/350x250?text=Please%20select%20an%20image";
+
+export const itemsStyles = {
+  root: {
+    background: "black"
+  },
+  gridContainer: {
+    paddingTop: 50,
+    width: "90%",
+    margin: "auto",
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  }
+};
+
+const styles = {
   card: {
-    maxHeight: 500,
+    maxHeight: "500px",
     marginTop: 0
   },
   gravatar: {
@@ -26,6 +45,6 @@ const styles = theme => ({
     marginRight: 5,
     color: "grey"
   }
-});
+};
 
 export default styles;

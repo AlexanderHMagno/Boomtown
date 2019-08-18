@@ -4,10 +4,8 @@ import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import Gravatar from "react-gravatar";
-import { FormHelperText } from "@material-ui/core";
 import { ALL_USER_ITEMS_QUERY } from "../../apollo/queries";
 import { Query } from "react-apollo";
-import Card from "../Items/Card";
 import Items from "../Items/Items";
 
 const styles = theme => ({
@@ -48,10 +46,6 @@ function Profile(props) {
     <div>
       <Query query={ALL_USER_ITEMS_QUERY} variables={{ id: viewer.id }}>
         {({ loading, error, data }) => {
-          {
-            /* How to pass variables in a query */
-          }
-
           //if (loading) return <FullScreenLoader inverted />;
           if (loading) return <p>Loading...</p>;
           if (error) return <p>{`Error! ${error.message}`}</p>;

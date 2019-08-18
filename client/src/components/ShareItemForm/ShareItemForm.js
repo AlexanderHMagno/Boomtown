@@ -1,6 +1,5 @@
 import React, { Component } from "react";
-import { Route, Redirect } from "react-router";
-import { BrowserRouter, Link, HashRouter } from "react-router-dom";
+import { Redirect } from "react-router";
 import { connect } from "react-redux";
 import { updateNewItem } from "../../redux/reducers";
 import { Form, FormSpy, Field } from "react-final-form";
@@ -9,10 +8,9 @@ import Button from "@material-ui/core/Button";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 import Tags from "./tags";
-import Share_Preview from "../ShareItemPreview";
+import SharePreview from "../ShareItemPreview";
 import { Mutation } from "react-apollo";
 import { ADD_ITEM_MUTATION } from "../../apollo/queries";
-import { warnOnceInDevelopment } from "apollo-utilities";
 
 const onSubmit = async values => {
   window.alert(JSON.stringify(values, 0, 2));
@@ -75,7 +73,7 @@ class shareItemForm extends Component {
     });
 
     const string_tags = new_tags_title.join(", ") + ".";
-    string_tags == "."
+    string_tags === "."
       ? this.setState({ tags: "" })
       : this.setState({
           tags: string_tags,
@@ -88,9 +86,9 @@ class shareItemForm extends Component {
   }
   evaluate_button() {
     return (
-      this.state.name == "" ||
-      this.state.description == "" ||
-      this.state.tags == ""
+      this.state.name === "" ||
+      this.state.description === "" ||
+      this.state.tags === ""
     );
   }
 
@@ -102,7 +100,7 @@ class shareItemForm extends Component {
         {(addItem, { data }) => (
           <div className={classes.container}>
             <div className={classes.leftContainer}>
-              <Share_Preview viewer={viewer} />
+              <SharePreview viewer={viewer} />
             </div>
             <div className={classes.rightContainer}>
               <Form
@@ -174,7 +172,6 @@ class shareItemForm extends Component {
                       {({ input, meta }) => (
                         <TextField
                           id="name"
-                          ref="name"
                           label="Name Your Item"
                           className={classes.textField}
                           value={input.value}
@@ -193,7 +190,7 @@ class shareItemForm extends Component {
                           placeholder="Describe Your Item"
                           multiline
                           rows="4"
-                          defaultValue={input.value}
+                          // defaultValue={input.value}
                           className={classes.textField}
                           margin="normal"
                           inputProps={{

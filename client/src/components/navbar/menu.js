@@ -61,12 +61,11 @@ class LongMenu extends React.Component {
               }}
             >
               {options.map(option => (
-                <Link to="/profile">
+                <Link key={option} to="/profile">
                   <MenuItem
-                    key={option}
                     selected={option === "Pyxis"}
                     onClick={() => {
-                      if (option == "Sign Out") {
+                      if (option === "Sign Out") {
                         this.handleClose();
                         return logout();
                       } else {

@@ -69,7 +69,7 @@ class MultipleSelect extends React.Component {
     );
     if (tag_already_created.length > 1) {
       target = target.filter(
-        tag => tag.title != target[target.length - 1].title
+        tag => tag.title !== target[target.length - 1].title
       );
     }
     this.setState({ tags: target });
@@ -77,10 +77,10 @@ class MultipleSelect extends React.Component {
   };
 
   render() {
-    const { classes, tags, width_large, update_tags } = this.props;
+    const { classes, tags, width_large } = this.props;
     return (
       <div className={classes.root}>
-        <FormControl className={classes.formControl} className={width_large}>
+        <FormControl className={[classes.formControl, width_large].join(" ")}>
           <InputLabel htmlFor="select-multiple-checkbox">Tag</InputLabel>
 
           <Select
@@ -113,8 +113,8 @@ class MultipleSelect extends React.Component {
 }
 
 MultipleSelect.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
+  classes: PropTypes.object,
+  theme: PropTypes.object
 };
 
 export default withStyles(styles, { withTheme: true })(ItemsContainer);
