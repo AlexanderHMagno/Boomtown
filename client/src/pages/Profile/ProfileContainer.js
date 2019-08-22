@@ -1,18 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Profile from "./Profile";
 import { withStyles } from "@material-ui/core/styles";
 import styles from "./styles";
 
-class ProfileContainer extends Component {
-  render() {
-    const { classes, viewer } = this.props;
-
-    return (
-      <div className={classes.back}>
-        <Profile viewer={viewer} />
-      </div>
-    );
-  }
-}
+let ProfileContainer = ({ classes }) => {
+  return (
+    <div className={classes.back}>
+      <Profile />
+    </div>
+  );
+};
 
 export default withStyles(styles)(ProfileContainer);

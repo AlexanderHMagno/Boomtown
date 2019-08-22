@@ -17,7 +17,7 @@ class ItemCard extends React.Component {
     itemAvailable: "visible"
   };
 
-  button_pressed_toggle() {
+  buttonPressedToggle() {
     // this.props.history.push("/profile");
     // this.props.history.goBack();
     this.setState({
@@ -42,19 +42,19 @@ class ItemCard extends React.Component {
           title={description}
         />
         <CardContent>
-          <div className={classes.user_info_container}>
+          <div className={classes.userInfoContainer}>
             <div>
               <Gravatar
                 email={itemowner.fullname + "@red.com/d=retro"}
                 className={classes.gravatar}
               />
             </div>
-            <div className={classes.user_info_right}>
+            <div className={classes.userInfoRight}>
               <Typography
                 gutterBottom
                 fontSize={12}
                 component="span"
-                className={classes.user_span}
+                className={classes.userSpan}
               >
                 {itemowner.fullname}
               </Typography>
@@ -62,7 +62,7 @@ class ItemCard extends React.Component {
                 gutterBottom
                 fontSize={2}
                 component="span"
-                className={classes.user_span}
+                className={classes.userSpan}
               >
                 {posted}
               </Typography>
@@ -94,7 +94,7 @@ class ItemCard extends React.Component {
             <Button
               variant="outlined"
               className={classes.button}
-              onClick={() => this.button_pressed_toggle()}
+              onClick={() => this.buttonPressedToggle()}
               id={1}
             >
               {this.state.itemAvailable ? "BORROW" : "Return"}
@@ -108,7 +108,8 @@ class ItemCard extends React.Component {
 }
 
 ItemCard.propTypes = {
-  classes: PropTypes.object
+  classes: PropTypes.object,
+  element: PropTypes.object
 };
 
 export default withRouter(withStyles(styles)(ItemCard));

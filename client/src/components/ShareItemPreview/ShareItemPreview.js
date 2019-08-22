@@ -16,6 +16,11 @@ let SharePreview = props => {
   const { classes, value, viewer } = props;
   const { image_url, name, tags, description } = value.rootReducer;
   const item_image = image_url ? image_url : placeholder;
+  const timeNow = new Date().toLocaleTimeString("en-US", {
+    hour: "numeric",
+    hour12: true,
+    minute: "numeric"
+  });
 
   return (
     <div>
@@ -49,7 +54,7 @@ let SharePreview = props => {
                 component="span"
                 className={classes.user_span}
               >
-                Hour
+                {timeNow}
               </Typography>
             </div>
           </div>

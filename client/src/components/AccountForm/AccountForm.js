@@ -24,7 +24,8 @@ class AccountForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      formToggle: true
+      formToggle: true,
+      problem: false
     };
   }
 
@@ -35,9 +36,16 @@ class AccountForm extends Component {
         onSubmit={values => {
           const user = { variables: { user: values } };
           if (this.state.formToggle) {
-            loginMutation(user).catch(error => this.setState({ error }));
+            loginMutation(user).catch(error =>
+              this.setState({ error, problem: "Wrong Password or User" })
+            );
           } else {
-            signupMutation(user).catch(error => this.setState({ error }));
+            signupMutation(user).catch(error =>
+              this.setState({
+                error,
+                problem: "Please verify your information"
+              })
+            );
           }
         }}
         render={({
@@ -118,6 +126,8 @@ class AccountForm extends Component {
                 )}
               />
             </FormControl>
+
+            {this.state.problem}
             <FormControl className={classes.formControl}>
               <Grid
                 container

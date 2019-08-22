@@ -29,14 +29,14 @@ const styles = {
     height: 0,
     paddingTop: "56.25%" // 16:9
   },
-  user_info_container: {
+  userInfoContainer: {
     display: "flex",
     marginBottom: "50px"
   },
-  user_info_right: {
+  userInfoRight: {
     marginLeft: "10px"
   },
-  user_span: {
+  userSpan: {
     margin: "0px"
   },
   spanTags: {
